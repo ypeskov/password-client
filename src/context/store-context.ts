@@ -1,21 +1,8 @@
 import React from 'react';
 
-export const user = {
-  _user: null,
-  _jwt: '',
+import { User } from "./User";
 
-  getUser() {
-    return this._user;
-  },
-
-  updateUser(user: any) {
-    this._user = user;
-  },
-
-  updateJWT(jwt: string) {
-    this._jwt = jwt;
-  }
-};
+const user = new User();
 
 export const StoreContext = React.createContext({
   user

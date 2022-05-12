@@ -1,28 +1,35 @@
 import React from 'react';
 import { Route, Routes, Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { StoreContext } from "../context/store-context";
 
 import Login from './Login';
 import Register from "./Register";
+import Dashboard from "./Dashboard";
+import AuthGuard from "../components/AuthGuard";
 
 function App() {
   const { user } = useContext(StoreContext);
+  const [path, setPath] = useState('/');
 
-  let path: string;
-  if (!user.getUser()) {
-    path = 'login';
-  } else {
-    path = 'dashboard';
-  }
+  useEffect(() => {
+    if (!user.isLoggedIn) {
+      setPath('login');
+    } else {
+      setPath('dashboard');
+    }
+  }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to={path} />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
+        <Route path="/" element={<Navigate to={path} />} />
+      </Routes>
+    </>
   );
 }
 

@@ -1,11 +1,13 @@
-import {FormEvent, RefObject, useRef } from "react";
-import  { Link } from "react-router-dom";
+import {FormEvent, RefObject, useRef, useContext } from "react";
+import {Link, useNavigate} from "react-router-dom";
 import { Form } from "react-bootstrap";
 
-// import {StoreContext} from '../context/store-context';
+import {StoreContext} from '../context/store-context';
+import parseJwt from '../utils/parseJwt';
 
 const Login = () => {
-  // const val = useContext(StoreContext);
+  const { user } = useContext(StoreContext);
+  const navigate = useNavigate();
 
   const submitHandler = async (event: FormEvent) => {
     event.preventDefault();
@@ -15,18 +17,30 @@ const Login = () => {
     // @ts-ignore
     const password: string = passwordRef.current.value;
 
-    const response = await fetch('http://localhost:8000/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      headers: {
-        'Content-Type': 'application/json'
+    try {
+      const response = await fetch('http://localhost:8000/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.status === 200) {
+        const data = await response.json();
+        user.setJWT(data['access_token']);
+        user.setUser(parseJwt(data['access_token']));
+        user.setLoggedIn(true);
+
+        navigate('/dashboard', {replace: true});
+      } else {
+        throw new Error(`Ooops. Status ${response.status}`);
       }
-    });
-    const data = await response.json();
-    console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const emailRef: RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
@@ -59,7 +73,8 @@ const Login = () => {
         <div className="row mt-3">
           <div className="col">
             {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <Link to="/register">Don't have an account?</Link>
+            <Link to="/register">Don't have an account?</Link><br />
+            <Link to="/">Home</Link>
           </div>
         </div>
       </div>
