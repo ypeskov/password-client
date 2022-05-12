@@ -4,7 +4,7 @@ import  { BrowserRouter } from "react-router-dom";
 
 import {StoreContext, user} from "./context/store-context";
 
-import './index.css';
+import './index.scss';
 import App from './pages/App';
 import reportWebVitals from './reportWebVitals';
 

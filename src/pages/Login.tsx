@@ -1,10 +1,11 @@
-import {FormEvent, RefObject, useRef, useContext} from "react";
+import {FormEvent, RefObject, useRef } from "react";
 import  { Link } from "react-router-dom";
+import { Form } from "react-bootstrap";
 
-import {StoreContext} from '../context/store-context';
+// import {StoreContext} from '../context/store-context';
 
 const Login = () => {
-  const val = useContext(StoreContext);
+  // const val = useContext(StoreContext);
 
   const submitHandler = async (event: FormEvent) => {
     event.preventDefault();
@@ -36,7 +37,7 @@ const Login = () => {
       <div className="container">
         <div className="row">
           <div className="col">
-            <form action="http://localhost:8000/auth/login" method="POST">
+            <Form action="http://localhost:8000/auth/login" method="POST">
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">Email address</label>
                 <input type="email" className="form-control" id="email" aria-describedby="emailHelp" ref={emailRef}/>
@@ -51,7 +52,7 @@ const Login = () => {
               </div>
 
               <button type="submit" className="btn btn-primary" onClick={submitHandler}>Login</button>
-            </form>
+            </Form>
           </div>
         </div>
 

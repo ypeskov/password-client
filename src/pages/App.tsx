@@ -5,8 +5,7 @@ import { useContext } from "react";
 import { StoreContext } from "../context/store-context";
 
 import Login from './Login';
-
-import './App.css';
+import Register from "./Register";
 
 function App() {
   const { user } = useContext(StoreContext);
@@ -22,7 +21,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigate to={path} />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Navigate to="/register" />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   );
 }
