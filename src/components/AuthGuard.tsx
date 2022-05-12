@@ -11,20 +11,20 @@ interface Props {
 
 const AuthGuard: FC<Props> = ({children}) => {
   const { user } = useContext(StoreContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(user.isLoggedIn);
-  const [ret, setRet] = useState(null);
+  const isLoggedIn = useState(user.isLoggedIn)[0];
+  const [jsx, setJsx] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isLoggedIn) {
-      setRet(children);
+      setJsx(children);
     } else {
-      setRet(null);
+      setJsx(null);
       navigate('/login')
     }
-  }, []);
+  }, [isLoggedIn, children, navigate ]);
 
-  return ret;
+  return jsx;
 };
 
 export default AuthGuard;

@@ -1,11 +1,13 @@
 import {FormEvent, RefObject, useRef, useContext } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { Form } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 import {StoreContext} from '../context/store-context';
 import parseJwt from '../utils/parseJwt';
 
 const Login = () => {
+  const { t } = useTranslation();
   const { user } = useContext(StoreContext);
   const navigate = useNavigate();
 

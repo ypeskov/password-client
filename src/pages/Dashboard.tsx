@@ -1,19 +1,12 @@
-import {useContext, useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {Link } from "react-router-dom";
 
 import {StoreContext} from '../context/store-context';
 
 const Dashboard = () => {
   const { user } = useContext(StoreContext);
-  // const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!user.isLoggedIn) {
-  //     navigate('/', {replace: true});
-  //   }
-  // }, []);
-
-  const { email, sub, first_name, last_name, ...rest } = user.getUser();
+  const { email, sub, first_name, last_name } = user.getUser(); // eslint-disable-line @typescript-eslint/no-unused-vars
   console.log(user.getUser());
 
   return (
