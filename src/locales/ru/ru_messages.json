@@ -9,5 +9,10 @@
   "Last Name": "Фамилия",
   "Repeat Password": "Повтор пароля",
   "Register": "Зарегистрироваться",
-  "Back to Login": "На страницу Входа"
+  "Back to Login": "На страницу Входа",
+
+  "Favorite": "Избранное",
+  "Safe": "Сейф",
+  "Settings": "Настройки",
+  "Add": "Добавить"
 }
