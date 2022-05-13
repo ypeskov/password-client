@@ -55,28 +55,26 @@ const Login = () => {
           <div className="col">
             <Form action="http://localhost:8000/auth/login" method="POST">
               <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email address</label>
+                <label htmlFor="email" className="form-label">{t('Email address')}</label>
                 <input type="email" className="form-control" id="email" aria-describedby="emailHelp" ref={emailRef}/>
-                <div id="emailHelp" className="form-text">Email address is used for login</div>
+                <div id="emailHelp" className="form-text">{t('Email address is used for login')}</div>
               </div>
 
               <div className="mb-3">
-                <label htmlFor="password" className="form-label">Password</label>
+                <label htmlFor="password" className="form-label">{t('Password')}</label>
                 <input type="password" className="form-control" id="password" aria-describedby="passwordHelp"
                        ref={passwordRef}/>
-                <div id="passwordHelp" className="form-text">Email address is used for login</div>
+                <div id="passwordHelp" className="form-text">{t('Your password for login')}</div>
               </div>
 
-              <button type="submit" className="btn btn-primary" onClick={submitHandler}>Login</button>
+              <button type="submit" className="btn btn-primary" onClick={submitHandler}>{t('Login')}</button>
             </Form>
           </div>
         </div>
 
         <div className="row mt-3">
           <div className="col">
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <Link to="/register">Don't have an account?</Link><br />
-            <Link to="/">Home</Link>
+            <Link to="/register">{t("Don't have an account?")}</Link>
           </div>
         </div>
       </div>

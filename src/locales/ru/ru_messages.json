@@ -1,3 +1,13 @@
 {
-  "Test": "Тест"
+  "Email address is used for login": "Email адрес используется для входа в систему",
+  "Email address": "Email адрес",
+  "Password": "Пароль",
+  "Your password for login": "Пароль для входа",
+  "Login": "Вход",
+  "Don't have an account?": "Нет аккаунта?",
+  "First Name": "Имя",
+  "Last Name": "Фамилия",
+  "Repeat Password": "Повтор пароля",
+  "Register": "Зарегистрироваться",
+  "Back to Login": "На страницу Входа"
 }

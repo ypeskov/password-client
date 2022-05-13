@@ -1,8 +1,10 @@
-import {FormEvent, useRef} from "react";
+import {FormEvent, useRef } from "react";
 import  { Link } from "react-router-dom";
-import { Form } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import {useTranslation} from "react-i18next";
 
 const RegisterUserPage = () => {
+  const { t } = useTranslation();
   const emailRef: any = useRef<HTMLInputElement>();
   const firstNameRef: any = useRef<HTMLInputElement>();
   const lastNameRef: any = useRef<HTMLInputElement>();
@@ -39,38 +41,38 @@ const RegisterUserPage = () => {
           <div className="col">
             <Form>
               <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email address</label>
+                <label htmlFor="email" className="form-label">{t('Email address')}</label>
                 <input type="email" className="form-control" id="email" aria-describedby="emailHelp" ref={emailRef}/>
-                <div id="emailHelp" className="form-text">Email address is used for login</div>
+                <div id="emailHelp" className="form-text">{t('Email address is used for login')}</div>
               </div>
 
               <div className="mb-3">
-                <label htmlFor="first-name" className="form-label">First Name</label>
+                <label htmlFor="first-name" className="form-label">{t('First Name')}</label>
                 <input type="text" className="form-control" id="first-name" ref={firstNameRef} />
               </div>
 
               <div className="mb-3">
-                <label htmlFor="last-name" className="form-label">Last Name</label>
+                <label htmlFor="last-name" className="form-label">{t('Last Name')}</label>
                 <input type="text" className="form-control" id="last-name" ref={lastNameRef}/>
               </div>
 
               <div className="mb-3">
-                <label htmlFor="password" className="form-label">Password</label>
+                <label htmlFor="password" className="form-label">{t('Password')}</label>
                 <input type="password" className="form-control" id="password" ref={passwordRef} />
               </div>
 
               <div className="mb-3">
-                <label htmlFor="password-repeat" className="form-label">Repeat Password</label>
+                <label htmlFor="password-repeat" className="form-label">{t('Repeat Password')}</label>
                 <input type="password" className="form-control" id="password-repeat"/>
               </div>
 
-              <button type="submit" className="btn btn-primary" onClick={submitHandler}>Register</button>
+              <button type="submit" className="btn btn-primary" onClick={submitHandler}>{t('Register')}</button>
             </Form>
           </div>
 
           <div className="row mt-3">
             <div className="col">
-              <Link to="/login">Back to Login</Link>
+              <Link to="/login">{t('Back to Login')}</Link>
             </div>
           </div>
         </div>
