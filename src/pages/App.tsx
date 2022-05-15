@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes, Navigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import "../i18n";
 
@@ -8,32 +8,57 @@ import { StoreContext } from "../context/store-context";
 
 import Login from './Login';
 import Register from "./Register";
-import Dashboard from "./Dashboard";
+import Favorite from "./Favorite";
 import AuthGuard from "../components/AuthGuard";
+import Navigation from "../components/Navigation";
+import Add from "./Add";
+import Header from "../components/Header";
+import { isSessionActive } from "../utils/sessionManager";
 
 
 function App() {
-  const { user } = useContext(StoreContext);
   const [path, setPath] = useState('/');
 
+  const isSession = isSessionActive();
+
+  const [userEmail, setUserEmail] = useState('');
+  const [userFirstName, setUserFirstName] = useState('');
+  const [userLastName, setUserLastName] = useState('');
+  const [jwt, setJwt] = useState('');
+
   useEffect(() => {
-    if (!user.isLoggedIn) {
+    if (!isSession) {
       setPath('login');
     } else {
       setPath('dashboard');
     }
-  }, [user.isLoggedIn]);
+  }, [isSession]);
 
   return (
     <>
-      <div>
+      <StoreContext.Provider value={{
+        userEmail,
+        setUserEmail,
+        userFirstName,
+        setUserFirstName,
+        userLastName,
+        setUserLastName,
+        jwt,
+        setJwt,
+        isLoggedIn: isSession,
+      }}>
+        
+        <Header />
+
+        {isSession && <Navigation />}
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
-          <Route path="/" element={<Navigate to={path} />} />
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/favorite" element={<AuthGuard><Favorite/></AuthGuard>}/>
+          <Route path="/add" element={<AuthGuard><Add /></AuthGuard>}/>
+          <Route path="/" element={<Navigate to={path}/>}/>
         </Routes>
-      </div>
+      </StoreContext.Provider>
     </>
   );
 }

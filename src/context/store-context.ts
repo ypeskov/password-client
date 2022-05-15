@@ -1,11 +1,16 @@
 import React from 'react';
 
-import { User } from "./User";
-
-const user = new User();
 
 export const StoreContext = React.createContext({
-  user
+  userEmail: '',
+  setUserEmail: (email: string) => {},
+  userFirstName: '',
+  setUserFirstName: (firstName: string) => {},
+  userLastName: '',
+  setUserLastName: (lastName: string) => {},
+  jwt: '',
+  setJwt: (jwt: string) => {},
+  isLoggedIn: false
 });
 
 export default StoreContext;

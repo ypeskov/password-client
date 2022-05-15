@@ -1,14 +1,31 @@
-import {FormEvent, RefObject, useRef, useContext } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import { FormEvent, RefObject, useRef, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
-import {StoreContext} from '../context/store-context';
+import { StoreContext } from '../context/store-context';
 import parseJwt from '../utils/parseJwt';
+import { setNewSession } from "../utils/sessionManager";
+
+const LIFE_TIME = 600000;
+
+const saveInfoToStorage = (email: string, firstName: string, lastName: string, jwt: string): void => {
+  sessionStorage.setItem('userEmail', email);
+  sessionStorage.setItem('firstName', firstName);
+  sessionStorage.setItem('lastName', lastName);
+  sessionStorage.setItem('jwt', jwt);
+  sessionStorage.setItem('expirationTime', (Date.now() + LIFE_TIME).toString());
+}
 
 const Login = () => {
   const { t } = useTranslation();
-  const { user } = useContext(StoreContext);
+  const {
+    setUserEmail,
+    setUserFirstName,
+    setUserLastName,
+    setJwt
+  } = useContext(StoreContext);
+
   const navigate = useNavigate();
 
   const submitHandler = async (event: FormEvent) => {
@@ -32,11 +49,16 @@ const Login = () => {
       });
       if (response.status === 200) {
         const data = await response.json();
-        user.setJWT(data['access_token']);
-        user.setUser(parseJwt(data['access_token']));
-        user.setLoggedIn(true);
 
-        navigate('/dashboard', {replace: true});
+        const {userEmail, first_name, last_name } = (parseJwt(data['access_token']));
+        setJwt(data['access_token']);
+        setUserEmail(userEmail);
+        setUserFirstName(first_name);
+        setUserLastName(last_name);
+        saveInfoToStorage(userEmail, first_name, last_name, data['access_token']);
+        setNewSession();
+
+        navigate('/favorite', { replace: true });
       } else {
         throw new Error(`Ooops. Status ${response.status}`);
       }

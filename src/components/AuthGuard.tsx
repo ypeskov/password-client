@@ -1,28 +1,22 @@
-import {FC, useEffect, useState} from 'react';
-import { useContext } from "react";
+import { useEffect, useState } from 'react';
 
-import StoreContext from "../context/store-context";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { isSessionActive } from "../utils/sessionManager";
 
-
-interface Props {
-  children: any;
-}
-
-const AuthGuard: FC<Props> = ({children}) => {
-  const { user } = useContext(StoreContext);
-  const isLoggedIn = useState(user.isLoggedIn)[0];
+const AuthGuard = ({ children }: any) => {
   const [jsx, setJsx] = useState(null);
   const navigate = useNavigate();
 
+  const isSession = isSessionActive();
+
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isSession) {
       setJsx(children);
     } else {
       setJsx(null);
       navigate('/login')
     }
-  }, [isLoggedIn, children, navigate ]);
+  }, [isSession, children, navigate]);
 
   return jsx;
 };

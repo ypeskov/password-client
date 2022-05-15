@@ -17,12 +17,6 @@ export class User  {
   getJwt() {
     return this._jwt;
   }
-
-  setLoggedIn(status: boolean) {
-    this.isLoggedIn = status;
-  }
-
-  isLoggedIn: boolean = false;
 }
 
 
