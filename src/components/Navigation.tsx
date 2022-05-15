@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next";
 import Nav from "react-bootstrap/Nav";
-import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import StoreContext from "../context/store-context";
+import { Link, useLocation } from "react-router-dom";
+
 
 const Navigation = () => {
+  const location = useLocation();
   const { t } = useTranslation();
 
   return (
@@ -14,7 +14,7 @@ const Navigation = () => {
           <div className="col">
             <Nav variant="pills"
                  onSelect={(selectedKey) => console.log(`selected ${selectedKey}`)}
-                 defaultActiveKey="favorite">
+                 defaultActiveKey={location.pathname.split('/')[1]}>
               <Nav.Item>
                 <Nav.Link eventKey="favorite" as={Link} to="/favorite">{t('Favorite')}</Nav.Link>
               </Nav.Item>
