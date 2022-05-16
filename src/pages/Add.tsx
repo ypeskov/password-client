@@ -42,10 +42,10 @@ const Add = () => {
   const recordLogin = new SecureRecordLogin(nameRef?.current?.value, typeRef?.current?.value);
 
   const collectLoginRecordDetails = (
-                                    loginVal: string = '',
-                                    password: string = '',
-                                    host: string = '',
-                                    notes: string = ''): void => {
+    loginVal: string = '',
+    password: string = '',
+    host: string = '',
+    notes: string = ''): void => {
     recordLogin.name = nameRef?.current.value ?? '';
     recordLogin.type = typeRef?.current.value ?? '';
     recordLogin.login = loginVal ?? '';
