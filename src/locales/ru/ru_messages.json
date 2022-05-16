@@ -4,6 +4,7 @@
   "Password": "Пароль",
   "Your password for login": "Пароль для входа",
   "Login": "Вход",
+  "Logout": "Выйти",
   "Don't have an account?": "Нет аккаунта?",
   "First Name": "Имя",
   "Last Name": "Фамилия",
@@ -14,5 +15,10 @@
   "Favorite": "Избранное",
   "Safe": "Сейф",
   "Settings": "Настройки",
-  "Add": "Добавить"
+  "Add": "Добавить",
+  "Enter name": "Введите имя",
+  "Login-type": "Login",
+  "Type": "Тип",
+  "Host": "Хост",
+  "Notes": "Комментарии"
 }
