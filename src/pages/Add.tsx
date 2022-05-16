@@ -20,7 +20,8 @@ const getRecordTypes = async (): Promise<string[]> => {
 };
 
 class SecureRecord {
-  constructor(public name: string, public type: string) {}
+  constructor(public name: string, public type: string) {
+  }
 }
 
 class SecureRecordLogin extends SecureRecord {
@@ -36,10 +37,15 @@ const Add = () => {
   const { t } = useTranslation()
   const [jsxTypes, setJsxTypes] = useState(null);
   const [typeVal, setTypeVal] = useState('login');
+  const [record, setRecord] = useState<SecureRecordLogin>();
 
   const recordLogin = new SecureRecordLogin(nameRef?.current?.value, typeRef?.current?.value);
 
-  const collectLoginRecordDetails = (loginVal: string, password: string, host: string, notes: string): void => {
+  const collectLoginRecordDetails = (
+                                    loginVal: string = '',
+                                    password: string = '',
+                                    host: string = '',
+                                    notes: string = ''): void => {
     recordLogin.name = nameRef?.current.value ?? '';
     recordLogin.type = typeRef?.current.value ?? '';
     recordLogin.login = loginVal ?? '';
@@ -47,10 +53,10 @@ const Add = () => {
     recordLogin.password = password ?? '';
     recordLogin.notes = notes ?? '';
 
-    console.log(recordLogin)
+    setRecord(recordLogin);
   };
 
-  const [recordDetails, setRecordDetails] = useState(<LoginRecord collect={collectLoginRecordDetails} />);
+  const [recordDetails, setRecordDetails] = useState(<LoginRecord collect={collectLoginRecordDetails}/>);
 
   useEffect(() => {
     ( async () => {
@@ -59,6 +65,7 @@ const Add = () => {
         return <option key={item} value={item}>{item}</option>
       }));
     } )();
+
   }, []);
 
   const submitHandler = async (event: FormEvent) => {
@@ -66,15 +73,9 @@ const Add = () => {
 
     const jwt = sessionStorage.getItem('jwt');
 
-    const name = nameRef.current.value;
-    const type = typeRef.current.value;
-
     const response = await fetch(`${API_HOST}/record/new`, {
       method: 'POST',
-      body: JSON.stringify({
-        name,
-        type
-      }),
+      body: JSON.stringify(record),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${jwt}`
@@ -86,7 +87,7 @@ const Add = () => {
 
   const updateRecordType = (event: any) => {
     setTypeVal(event.target.value);
-    setRecordDetails(<LoginRecord collect={collectLoginRecordDetails} />);
+    setRecordDetails(<LoginRecord collect={collectLoginRecordDetails}/>);
   }
 
   return (
@@ -94,7 +95,7 @@ const Add = () => {
       <div className="container">
         <div className="row">
           <div className="col">
-            <Form>
+            <Form onChange={e => collectLoginRecordDetails()}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>{t('Name')}</Form.Label>
                 <Form.Control type="text" placeholder={t('Enter name')} ref={nameRef}/>
